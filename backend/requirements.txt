@@ -1,5 +1,7 @@
-fastapi
-uvicorn
-pydantic
-sqlalchemy
-pytest
+fastapi>=0.110,<1.0
+uvicorn[standard]>=0.25,<1.0
+pydantic>=2.6,<3.0
+pydantic-settings>=2.2,<3.0
+sqlalchemy>=2.0,<3.0
+PyJWT>=2.8,<3.0
+pytest>=8,<9

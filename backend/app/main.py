@@ -1,35 +1,54 @@
+import logging
+from contextlib import asynccontextmanager
+from typing import AsyncIterator
+
 from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
-from app.database import Base, SessionLocal, engine
+from app.core.config import settings
+from app.core.dependencies import get_db
+from app.database import Base, engine
 from app.models.product import Product
 from app.schemas.product import ProductCreate, ProductResponse
 
 
+logger = logging.getLogger(__name__)
+
+
+@asynccontextmanager
+async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+    """Initialize database tables before serving requests."""
+    Base.metadata.create_all(bind=engine)
+    logger.info("Database tables initialized")
+    yield
+
+
 app = FastAPI(
-    title="StockSense API",
-    description="Backend API for the StockSense Inventory Management System",
-    version="1.0.0",
+    title=settings.app_name,
+    description=settings.app_description,
+    version=settings.app_version,
+    lifespan=lifespan,
 )
-
-# Create database tables
-Base.metadata.create_all(bind=engine)
-
-
-def get_db():
-    """Provide a database session for each request."""
-    db = SessionLocal()
-
-    try:
-        yield db
-    finally:
-        db.close()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.cors_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
 def root():
-    """Health check endpoint."""
+    """Return a basic API welcome message."""
     return {"message": "StockSense API is running"}
+
+
+@app.get("/health", tags=["Health"])
+def health_check() -> dict[str, str]:
+    """Report that the API process is available."""
+    return {"status": "ok"}
 
 
 # -------------------------------------------------------------------

@@ -1,8 +1,15 @@
-# Architecture
+# StockSense Architecture
 
-StockSense is organized as a frontend and backend application:
 
-- `frontend/` contains the React user interface, built and served with Vite.
-- `backend/` contains the FastAPI application and future backend modules.
+User
+  ↓
+React Frontend
+  ↓
+FastAPI Backend
+  ↓
+Business Logic
+  ↓
+Database
 
-The `app/models/`, `app/schemas/`, and `app/services/` directories are extension points for implementation work. No persistence, API routes, or business behavior is defined yet.
+The backend persists application data in PostgreSQL through SQLAlchemy. The
+PostgreSQL connection URL is required through environment configuration.

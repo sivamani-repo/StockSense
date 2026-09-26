@@ -18,6 +18,9 @@ npm run dev
 
 ## Start the backend
 
+Create a PostgreSQL database, configure its connection in the root `.env` file
+using `.env.example`, and then run:
+
 ```bash
 cd backend
 python -m pip install -r requirements.txt

@@ -6,7 +6,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-import { loginUser } from "../services/authService";
+import { loginUser } from "../services/authservice";
 import { apiRequest } from "../services/api";
 
 export default function Login() {
@@ -70,7 +70,7 @@ export default function Login() {
     } catch (error) {
       setError(
         error?.message ||
-          "Login failed. Please check your credentials."
+        "Login failed. Please check your credentials."
       );
     } finally {
       setLoading(false);
@@ -121,7 +121,7 @@ export default function Login() {
     } catch (error) {
       setError(
         error?.message ||
-          "Google sign-in failed. Please try again."
+        "Google sign-in failed. Please try again."
       );
     } finally {
       setLoading(false);

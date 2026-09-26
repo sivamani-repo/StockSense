@@ -49,15 +49,22 @@ export async function apiRequest(
   }
 
   if (!response.ok) {
-    const message =
-      typeof data === "object"
-        ? data?.detail
-        : data;
+    let message = "Something went wrong. Please try again.";
+    
+    if (typeof data === "object" && data !== null) {
+      if (Array.isArray(data.detail)) {
+        // FastAPI validation errors
+        message = data.detail.map(err => err.msg).join(", ");
+      } else if (data.detail) {
+        message = data.detail;
+      } else if (data.message) {
+        message = data.message;
+      }
+    } else if (typeof data === "string" && data) {
+      message = data;
+    }
 
-    throw new Error(
-      message ||
-        "Something went wrong. Please try again."
-    );
+    throw new Error(message);
   }
 
   return data;

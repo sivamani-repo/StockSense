@@ -134,7 +134,7 @@ export default function Receipts() {
       setCreateSubmitting(true);
       setCreateError("");
       await createReceipt({
-        supplier_name: supplierName.trim(),
+        supplier: supplierName.trim(),
         location_id: Number(locationId),
         items: items.map((it) => ({
           product_id: Number(it.product_id),
@@ -279,7 +279,7 @@ export default function Receipts() {
                         </div>
                       </td>
                       <td>
-                        <div style={{ fontWeight: 600 }}>{rec.supplier_name}</div>
+                        <div style={{ fontWeight: 600 }}>{rec.supplier || rec.supplier_name}</div>
                       </td>
                       <td>
                         <span style={{ fontSize: "13px", color: "#5e5751" }}>
@@ -475,7 +475,7 @@ export default function Receipts() {
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px", alignItems: "center" }}>
             <div>
               <div style={{ fontSize: "12px", color: "#6e6761" }}>Supplier</div>
-              <div style={{ fontWeight: 700, fontSize: "16px" }}>{selectedReceipt.supplier_name}</div>
+              <div style={{ fontWeight: 700, fontSize: "16px" }}>{selectedReceipt.supplier || selectedReceipt.supplier_name}</div>
             </div>
             <div>
               <StatusBadge status={selectedReceipt.status} />

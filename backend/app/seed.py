@@ -259,6 +259,7 @@ def seed_database():
             adj1 = Adjustment(
                 location_id=loc_stock.id,
                 status="done",
+                reason="Cycle count – office supplies shelf",
                 created_by=admin_user.id,
             )
             db.add(adj1)
@@ -268,6 +269,7 @@ def seed_database():
             adj2 = Adjustment(
                 location_id=loc_stock.id,
                 status="draft",
+                reason="Quarterly physical inventory check",
                 created_by=staff_user.id,
             )
             db.add(adj2)

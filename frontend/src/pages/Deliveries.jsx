@@ -137,7 +137,7 @@ export default function Deliveries() {
       setCreateSubmitting(true);
       setCreateError("");
       await createDelivery({
-        customer_name: customerName.trim(),
+        customer: customerName.trim(),
         location_id: Number(locationId),
         items: items.map((it) => ({
           product_id: Number(it.product_id),
@@ -311,7 +311,7 @@ export default function Deliveries() {
                         </div>
                       </td>
                       <td>
-                        <div style={{ fontWeight: 600 }}>{del.customer_name}</div>
+                        <div style={{ fontWeight: 600 }}>{del.customer || del.customer_name}</div>
                       </td>
                       <td>
                         <span style={{ fontSize: "13px", color: "#5e5751" }}>
@@ -547,7 +547,7 @@ export default function Deliveries() {
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px", alignItems: "center" }}>
             <div>
               <div style={{ fontSize: "12px", color: "#6e6761" }}>Customer</div>
-              <div style={{ fontWeight: 700, fontSize: "16px" }}>{selectedDelivery.customer_name}</div>
+              <div style={{ fontWeight: 700, fontSize: "16px" }}>{selectedDelivery.customer || selectedDelivery.customer_name}</div>
             </div>
             <div>
               <StatusBadge status={selectedDelivery.status} />
